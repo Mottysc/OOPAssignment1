@@ -6,14 +6,11 @@ public class Game {
     
     public static void main(String[] args) {
         System.out.println("Hello world");
-        Inventory inventory = new Inventory();
-        inventory.addItem("apple");
-        inventory.addItem("pear");
-        inventory.addItem("banana");
-        System.out.println(inventory.displayInventory());
-        inventory.removeItem("pear");
-        System.out.println(inventory.displayInventory());
-
+        Room kitchen = new Room("kitchen", "yeah", 'k', new Position(2, 3));
+        Map theMap = new Map(5, 5);
+        System.out.println(kitchen.getDescription());
+        theMap.placeRoom(kitchen.getPosition(), kitchen.getSymbol());
+        System.out.println(theMap.display());
     }
     
 }
