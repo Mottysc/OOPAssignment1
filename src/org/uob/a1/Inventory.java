@@ -29,7 +29,9 @@ public class Inventory {
     public String displayInventory() {
         String returnString = "";
         for (int i = 0; i < items.length; i++) {
-            returnString += items[i] + " ";
+            if (items[i] != null) {
+                returnString += items[i] + " ";
+            }
         }
         return returnString;
     }
