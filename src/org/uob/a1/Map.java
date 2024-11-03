@@ -10,8 +10,8 @@ public class Map {
        this.width = width;
        this.height = height;
        this.map = new char[width][height];
-       for (int x = 0; x < width; x++) {
-           for (int y = 0; y < height; y++) {
+       for (int y = 0; y < width; y++) {
+           for (int x = 0; x < height; x++) {
                map[x][y] = EMPTY;
            }
        }
@@ -23,8 +23,8 @@ public class Map {
 
    public String display(){
        StringBuilder sb = new StringBuilder();
-       for (int x = 0; x < width; x++) {
-           for (int y = 0; y < height; y++) {
+       for (int y = 0; y < width; y++) {
+           for (int x = 0; x < height; x++) {
                sb.append(map[x][y]);
            }
            sb.append("\n");
