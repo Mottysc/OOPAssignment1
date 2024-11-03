@@ -27,6 +27,7 @@ public class Map {
            for (int y = 0; y < height; y++) {
                sb.append(map[x][y]);
            }
+           sb.append("\n");
        }
        return sb.toString();
    }
