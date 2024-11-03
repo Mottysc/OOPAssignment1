@@ -8,7 +8,12 @@ public class Inventory {
    }
 
    public void addItem(String item) {
-       items[items.length - 1] = item;
+       for (int i = 0; i < MAX_ITEMS; i++) {
+           if (items[i] == null) {
+               items[i] = item;
+               break;
+           }
+       }
    }
 
    public void removeItem(String item) {
