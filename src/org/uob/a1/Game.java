@@ -11,6 +11,7 @@ public class Game {
         System.out.println(kitchen.getDescription());
         theMap.placeRoom(kitchen.getPosition(), kitchen.getSymbol());
         System.out.println(theMap.display());
+
     }
     
 }
