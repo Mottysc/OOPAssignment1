@@ -10,7 +10,7 @@ public class Game {
         Map theMap = new Map(5, 5);
         System.out.println(kitchen.getDescription());
         theMap.placeRoom(kitchen.getPosition(), kitchen.getSymbol());
-        System.out.println(theMap.display());
+        System.out.print(theMap.display());
     }
     
 }
