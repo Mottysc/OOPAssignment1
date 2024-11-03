@@ -3,7 +3,6 @@ package org.uob.a1;
 public class Game {
     
     public static void main(String[] args) {
-        int[] coordinates = new int[2];
         Inventory inv = new Inventory();
         Map map = new Map(6, 5);
 
