@@ -17,7 +17,7 @@ public class Score {
        noPuzzlesSolves++;
    }
    public double getScore() {
-       currentScore = startingScore - noRoomsVisited + PUZZLE_VALUE * noPuzzlesSolves;
+       currentScore = startingScore - noRoomsVisited + (PUZZLE_VALUE * noPuzzlesSolves);
        return currentScore;
    }
         

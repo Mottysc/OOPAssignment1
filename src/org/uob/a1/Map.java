@@ -9,23 +9,23 @@ public class Map {
    public Map(int width, int height) {
        this.width = width;
        this.height = height;
-       this.map = new char[width][height];
-       for (int y = 0; y < width; y++) {
-           for (int x = 0; x < height; x++) {
-               map[x][y] = EMPTY;
+       this.map = new char[height][width];
+       for (int y = 0; y < height; y++) {
+           for (int x = 0; x < width; x++) {
+               map[y][x] = EMPTY;
            }
        }
    }
 
    public void placeRoom(Position pos, char symbol){
-       map[pos.x][pos.y] = symbol;
+       map[pos.y][pos.x] = symbol;
    }
 
    public String display(){
        StringBuilder sb = new StringBuilder();
-       for (int y = 0; y < width; y++) {
-           for (int x = 0; x < height; x++) {
-               sb.append(map[x][y]);
+       for (int y = 0; y < height; y++) {
+           for (int x = 0; x < width; x++) {
+               sb.append(map[y][x]);
            }
            sb.append("\n");
        }
