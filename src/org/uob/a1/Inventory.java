@@ -39,7 +39,7 @@ public class Inventory {
     public int hasItem(String item){
        int itemPosition = -1;
        for (int i = 0; i < items.length; i++){
-           if (items[i].equals(item)){
+           if (items[i] == item){
                itemPosition = i;
            }
        }
