@@ -31,8 +31,8 @@ public class Game {
         Room northRoad = new Room("Road", "", 'r', new Position(2, 2));
         map.placeRoom(northRoad.getPosition(), northRoad.getSymbol());
         map.placeRoom(new Position(2, 3), 'r');
-        map.placeRoom(new Position(3, 3), 'r');
-        map.placeRoom(new Position(4, 3), 'r');
+        map.placeRoom(new Position(2, 4), 'r');
+        map.placeRoom(new Position(3, 4), 'r');
 
         System.out.println(map.display());
 
