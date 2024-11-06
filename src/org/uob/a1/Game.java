@@ -159,15 +159,15 @@ public class Game {
                 break;
             case "help":
                 String helpMessage = "Here are the commands you can use:\n"
-                        + "\"move <direction>\" - (<direction> can be \"north\", \"south\", \"east\", \"west\"). The player moves to a new room based on the direction.\n"
-                        + "\"look\" - Displays a description of the room the player is in.\n"
-                        + "\"look <feature>\" - Displays a more detailed description of a feature of a room.\n"
-                        + "\"look <item>\" - Displays a description of an item in your inventory.\n"
-                        + "\"inventory\" - Displays a list of all items the player has obtained.\n"
-                        + "\"score\" - Displays the user’s current score.\n"
-                        + "\"map\" - Displays a text-based map of the current explored game world.\n"
-                        + "\"help\" - Displays a help message.\n"
-                        + "\"quit\" - Quits the game\n"
+                        + "• \"move <direction>\" - (<direction> can be \"north\", \"south\", \"east\", \"west\"). The player moves to a new room based on the direction.\n"
+                        + "• \"look\" - Displays a description of the room the player is in.\n"
+                        + "• \"look <feature>\" - Displays a more detailed description of a feature of a room.\n"
+                        + "• \"look <item>\" - Displays a description of an item in your inventory.\n"
+                        + "• \"inventory\" - Displays a list of all items the player has obtained.\n"
+                        + "• \"score\" - Displays the user’s current score.\n"
+                        + "• \"map\" - Displays a text-based map of the current explored game world.\n"
+                        + "• \"help\" - Displays a help message.\n"
+                        + "• \"quit\" - Quits the game\n"
                         + "\n";
                 System.out.println(helpMessage);
 
