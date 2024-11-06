@@ -1,10 +1,10 @@
 package org.uob.a1;
 
 public class Map {
-   private int width;
-   private int height;
+   public int width;
+   public int height;
    final private char EMPTY = '.';
-   private char[][] map;
+   public char[][] map;
 
    public Map(int width, int height) {
        this.width = width;
