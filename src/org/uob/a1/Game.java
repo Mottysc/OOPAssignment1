@@ -170,6 +170,7 @@ public class Game {
                         + "• \"quit\" - Quits the game\n"
                         + "\n";
                 System.out.println(helpMessage);
+                break;
 
             default:
                 System.out.println("You're not sure what to do right now...");
