@@ -44,7 +44,7 @@ public class Game {
         Item todoList = new Item("Todo list", "You read the todo list, it says to go shopping, fry latkes, prepare the menorah, and put up the decorations. You should probably help your mother and do some of these.");
         kitchen.setItems(new Item[]{todoList});
         Item menorah = new Item("Menorah", "It's your childhood menorah, you can see the signs of time through the little dents and scratches. Next to it are your candles and the matches neatly prepared.");
-        Item candles = new Item("Candles", "The candles you need to light the menorah. There are some blue, red, green, yellow, and purple candles, but you can't remember in which order you like to place them...");
+        Item candles = new Item("Candles", "The candles you need to light the menorah. There are some blue, red, green, yellow, and purple candles, but you can't remember in which order you like to place them. You pick them up either way..", true);
         livingRoom.setItems(new Item[]{candles, menorah});
         currentRoom = kitchen;
         System.out.print("You enter " + currentRoom.getName() + ". ");
@@ -146,6 +146,31 @@ public class Game {
             case "map":
                 System.out.println(map.display());
                 break;
+            case "take":
+                if (!hasFeature) {
+                    System.out.println("You don't know what to pick up.");
+                }
+                else {
+                    boolean found = false;
+                    for (Item item : currentRoom.getItems()) {
+                        if (feature.equalsIgnoreCase(item.getName())){
+                            Item[] copyItems = currentRoom.getItems();
+                            for (int i = 0; i < copyItems.length; i++) {
+                                if (item.equals(copyItems[i])){
+                                    copyItems[i] = null;
+                                    break;
+                                }
+                            }
+                            currentRoom.setItems(copyItems);
+                            found = true;
+                            inv.addItem(item.getName(), item.getDescription());
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("You can't find that item to pick up.");
+                    }
+                }
 
             case "inventory":
                 if (inv.isEmpty()){
