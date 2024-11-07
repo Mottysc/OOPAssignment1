@@ -35,9 +35,12 @@ public class Game {
         map.placeRoom(eastRoad.getPosition(), eastRoad.getSymbol());
         Room northRoad = new Room("the Road", "", 'r', new Position(2, 2));
         map.placeRoom(northRoad.getPosition(), northRoad.getSymbol());
-        map.placeRoom(new Position(2, 3), 'r');
-        map.placeRoom(new Position(2, 4), 'r');
-        map.placeRoom(new Position(3, 4), 'r');
+        Room northMidRoad = new Room("the Road", "", 'r', new Position(2, 3));
+        map.placeRoom(northMidRoad.getPosition(), northMidRoad.getSymbol());
+        Room splitRoad = new Room("the Road", "The road is at a split. You can walk north to go to your house, east to get to your grandma's house or your neighbour's house, or you can go west to the shop.", 'r', new Position(2, 4));
+        map.placeRoom(splitRoad.getPosition(), splitRoad.getSymbol());
+        Room eastMidRoad = new Room("the Road", "", 'r', new Position(3, 4));
+        map.placeRoom(eastMidRoad.getPosition(), eastMidRoad.getSymbol());
 
         rooms = new Room[]{kitchen, livingRoom, diningRoom, attic, westRoad, eastRoad, northRoad, grandma, neighbour, hallway, shop};
 
