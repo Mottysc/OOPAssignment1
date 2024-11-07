@@ -154,23 +154,30 @@ public class Game {
                     boolean found = false;
                     for (Item item : currentRoom.getItems()) {
                         if (feature.equalsIgnoreCase(item.getName())){
-                            Item[] copyItems = currentRoom.getItems();
-                            for (int i = 0; i < copyItems.length; i++) {
-                                if (item.equals(copyItems[i])){
-                                    copyItems[i] = null;
-                                    break;
+                            if (item.canPickUp) {
+                                Item[] copyItems = currentRoom.getItems();
+                                for (int i = 0; i < copyItems.length; i++) {
+                                    if (item.equals(copyItems[i])) {
+                                        copyItems[i] = null;
+                                        break;
+                                    }
                                 }
+                                currentRoom.setItems(copyItems);
+                                found = true;
+                                inv.addItem(item.getName(), item.getDescription());
+                                System.out.println("You pick up the " + item.getName() + ".");
+                                break;
                             }
-                            currentRoom.setItems(copyItems);
-                            found = true;
-                            inv.addItem(item.getName(), item.getDescription());
-                            break;
+                            else {
+                                System.out.println("You know you shouldn't pick that up.");
+                            }
                         }
                     }
                     if (!found) {
                         System.out.println("You can't find that item to pick up.");
                     }
                 }
+                break;
 
             case "inventory":
                 if (inv.isEmpty()){
