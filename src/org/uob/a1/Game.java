@@ -41,8 +41,11 @@ public class Game {
 
         rooms = new Room[]{kitchen, livingRoom, diningRoom, attic, westRoad, eastRoad, northRoad, grandma, neighbour, hallway, shop};
 
-        Item todoList = new Item("Todo list", "You read the todo list, it says to go shopping, fry latkes, prepare the menorah, and put up the decorations.");
+        Item todoList = new Item("Todo list", "You read the todo list, it says to go shopping, fry latkes, prepare the menorah, and put up the decorations. You should probably help your mother and do some of these.");
         kitchen.setItems(new Item[]{todoList});
+        Item menorah = new Item("Menorah", "It's your childhood menorah, you can see the signs of time through the little dents and scratches. Next to it are your candles and the matches neatly prepared.");
+        Item candles = new Item("Candles", "The candles you need to light the menorah. There are some blue, red, green, yellow, and purple candles, but you can't remember in which order you like to place them...");
+        livingRoom.setItems(new Item[]{candles, menorah});
         currentRoom = kitchen;
         System.out.print("You enter " + currentRoom.getName() + ". ");
         System.out.println(currentRoom.getDescription());
@@ -164,11 +167,10 @@ public class Game {
                         + "• \"look <feature>\" - Displays a more detailed description of a feature of a room.\n"
                         + "• \"look <item>\" - Displays a description of an item in your inventory.\n"
                         + "• \"inventory\" - Displays a list of all items the player has obtained.\n"
-                        + "• \"score\" - Displays the user’s current score.\n"
+                        + "• \"score\" - Displays your current score.\n"
                         + "• \"map\" - Displays a text-based map of the current explored game world.\n"
                         + "• \"help\" - Displays a help message.\n"
-                        + "• \"quit\" - Quits the game\n"
-                        + "\n";
+                        + "• \"quit\" - Quits the game\n";
                 System.out.println(helpMessage);
                 break;
 
