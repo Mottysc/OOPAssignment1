@@ -65,7 +65,7 @@ public class Game {
         boolean hasFeature = false;
         String commandWord = parts[0].toLowerCase();
         String feature = null;
-        //see if an item/direction was specified
+        //see if an item/feature/direction was specified
         if (parts.length > 1){
             feature = parts[1].toLowerCase();
             hasFeature = true;
@@ -153,24 +153,32 @@ public class Game {
                 else {
                     boolean found = false;
                     for (Item item : currentRoom.getItems()) {
-                        if (feature.equalsIgnoreCase(item.getName())){
-                            Item[] copyItems = currentRoom.getItems();
-                            for (int i = 0; i < copyItems.length; i++) {
-                                if (item.equals(copyItems[i])){
-                                    copyItems[i] = null;
-                                    break;
+                        if (item != null && feature.equalsIgnoreCase(item.getName())){
+                            if (item.canPickUp) {
+                                Item[] copyItems = currentRoom.getItems();
+                                for (int i = 0; i < copyItems.length; i++) {
+                                    if (item.equals(copyItems[i])) {
+                                        copyItems[i] = null;
+                                        break;
+                                    }
                                 }
+                                currentRoom.setItems(copyItems);
+                                inv.addItem(item.getName(), item.getDescription());
+                                System.out.println("You pick up the " + item.getName() + ".");
+                                found = true;
+                                break;
                             }
-                            currentRoom.setItems(copyItems);
+                            else {
+                                System.out.println("You know you shouldn't pick that up.");
+                            }
                             found = true;
-                            inv.addItem(item.getName(), item.getDescription());
-                            break;
                         }
                     }
                     if (!found) {
                         System.out.println("You can't find that item to pick up.");
                     }
                 }
+                break;
 
             case "inventory":
                 if (inv.isEmpty()){
@@ -219,14 +227,18 @@ public class Game {
             }
         }
         else {
+            boolean found = false;
             for (Item item : currentRoom.getItems()){
-                if (item.getName().equalsIgnoreCase(itemName)){
+                if (item != null && item.getName().equalsIgnoreCase(itemName)){
                     System.out.println(item.getDescription());
+                    found = true;
                 }
-                else {
-                    System.out.println("You can't seem to see that item.");
-                }
-            }}
+            }
+
+            if (!found) {
+                System.out.println("You can't seem to see that item.");
+            }
+        }
     }
 
 }
