@@ -28,13 +28,20 @@ public class Inventory {
     }
 
     public void removeItem(String item) {
-        String[] temp = new String[items.length];
-        for (int i = 0; i < temp.length; i++) {
-            if (!item.equals(items[i])) {
-                temp[i] = items[i];
+        boolean found = false;
+        for (int i = 0; i < items.length; i++) {
+            if(found){
+                items[i-1] = items[i];
             }
+            else if (item.equalsIgnoreCase(items[i])) {
+                found = true;
+            }
+
         }
-        items = temp;
+        if (found) {
+            items[items.length - 1] = null;
+        }
+        else{System.out.println(item+" not found to remove");}
     }
 
     public String displayInventory() {
