@@ -382,6 +382,7 @@ public class Game {
         String order = "RBGP";
 
         while (playing && !rightOrder) {
+            boolean validChars = true;
             System.out.print("->> ");
             String guess = input.nextLine().toUpperCase();
             if (guess.length() != 4) {
@@ -391,7 +392,16 @@ public class Game {
                 } else {
                     System.out.println("You only need four candles.");
                 }
-            } else {
+            } else if (validChars) {
+
+                    for (int i = 0; i < 4; i++) {
+                        char character = guess.charAt(i);
+                        if (character != 'R' || character != 'G' || character != 'B' || character != 'P' || character != 'O' || character != 'W' || character != 'Y' || character != 'T' || character != 'C') {
+                            validChars = false;
+                            break;
+                        }
+                    }
+
                 int CODE_LENGTH = 4;
                 int[] matches = new int[4];
                 int greens = 0;
