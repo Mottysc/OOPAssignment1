@@ -21,7 +21,7 @@ public class Game {
         map.placeRoom(livingRoom.getPosition(), livingRoom.getSymbol());
         Room hallway = new Room("the Hallway", "A cluttered hallway lays before you. Your family's coats and scarves are hung up waiting to be used. \nYou can see your boots laying on the floor, still covered with bits of snow from earlier in the day. \nYour front door is to the south of you, your living room to the west, and the dining room in the east.", 'h', new Position(2, 1));
         map.placeRoom(hallway.getPosition(), hallway.getSymbol());
-        Room grandmaHouse = new Room("Grandma's House", "Grandma’s house is warm and inviting, with the soft glow of the fireplace and the scent of fresh cookies in the air. \nGrandma sits in her favorite chair, knitting with a gentle smile, surrounded by cozy blankets and old photographs.", 'g', new Position(5, 4));
+        Room grandmaHouse = new Room("Grandma's House", "Grandma’s house is warm and inviting, with the soft glow of the fireplace and the scent of fresh cookies in the air. \nGrandma sits in her favorite chair, knitting with a gentle smile, surrounded by cozy blankets and an old photo on the wall.", 'g', new Position(5, 4));
         map.placeRoom(grandmaHouse.getPosition(), grandmaHouse.getSymbol());
         Room shop = new Room("the Shop", "The shop is small but cozy, with shelves lined with potatoes, bottles of oil, bags of flour, some sweets, and some other tasty goods.\nThe warm light spills from the window, casting a friendly glow over the space.\nBehind the counter, a kind-looking shopkeeper greets you with a smile, her eyes friendly and welcoming as she tidies the cluttered shelves.", 's', new Position(0, 4));
         map.placeRoom(shop.getPosition(), shop.getSymbol());
@@ -60,6 +60,7 @@ public class Game {
         Item oldBox = new Item("Box", "You look into the old box, inside it you can see the decorations that haven't been put up yet along with some keepsakes.");
         Item decorations = new Item("Decorations", "It's the decorations you need to put up outside your house. Your mother would be really appreciative if you did this.", true);
         Item keepsakes = new Item("Keepsakes", "It's some old keepsakes that your mother has kept for a few years. They look delicate.");
+        Item photo = new Item("Photo", "It's an old family photo your grandma loves. On it you can see your family; your uncle Richard, your aunt Barbra, your Grandma, and your dad Patrick.");
         kitchen.setItems(new Item[]{todoList, pan});
         livingRoom.setItems(new Item[]{candles, menorah, gelt});
         hallway.setItems(new Item[]{boots});
@@ -404,8 +405,7 @@ public class Game {
                 System.out.println("""
                         Here's your hint:
                         You notice a piece of paper with the following scribbled on it;
-                        "An old photo rests on Grandma’s wall, with faces familiar, standing tall.
-                        A hidden rhythm, silent and true, may help light the way for you.\"""");
+                        "Grandma's photo\"""");
                 continue;
             }
 
