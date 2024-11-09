@@ -376,7 +376,16 @@ public class Game {
     }
 
     public static void playMastermind(){
-        System.out.println("You are trying to remember the order of the candles. You know that you only need to use four candles today. \nThe candles available to you are:\nRed, Orange, Yellow, Green, Blue, Purple, White, Lime, Turquoise, and Cyan.\nTo figure out the right order, use the first initial of each colour and guess the correct order.\nGiven your guess you will receive an answer based on your guess. \nThe candles can either be the right colour in the wrong place, the right colour and the right place, or the wrong colour.\nType \"give up\" to stop playing.");
+        System.out.println("""
+        You are trying to remember the order of the candles. You know that you only need to use four candles today.
+        The candles available to you are:
+        Red, Orange, Yellow, Green, Blue, Purple, White, Lime, Turquoise, and Cyan.
+        To figure out the right order, use the first initial of each colour and guess the correct order.
+        For example, to enter two green and two red candles, type "ggrr".
+        You will then receive an answer based on your guess.
+        The candles can either be the right colour in the wrong place, the right colour and the right place, or the wrong colour.
+        Type "give up" to stop playing.
+        For a hint, type "hint\"""");
         boolean rightOrder = false;
         boolean playing = true;
         final String ORDER = "RBGP";
@@ -389,7 +398,14 @@ public class Game {
 
             if (guess.equals("GIVE UP")){
                 playing = false;
+                System.out.println("You decide to stop putting the candles in the menorah for now.");
                 break;
+            } else if (guess.equals("HINT")){
+                System.out.println("""
+                        Here's your hint:
+                        You notice a piece of paper with the following scribbled on it;
+                        "An old photo rests on Grandma’s wall, with faces familiar, standing tall.
+                        A hidden rhythm, silent and true, may help light the way for you.\"""");
             }
 
             if (guess.length() != 4) {
