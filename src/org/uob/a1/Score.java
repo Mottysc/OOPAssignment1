@@ -1,21 +1,24 @@
 package org.uob.a1;
 
 public class Score {
-    private int startingScore;
+    private final int PUZZLE_VALUE = 10;
     private double currentScore;
+    private int startingScore;
     private int noRoomsVisited;
     private int noPuzzlesSolves;
-    private final int PUZZLE_VALUE = 10;
 
     public Score(int startingScore) {
         this.startingScore = startingScore;
     }
-    public void visitRoom(){
+
+    public void visitRoom() {
         noRoomsVisited++;
     }
-    public void solvePuzzle(){
+
+    public void solvePuzzle() {
         noPuzzlesSolves++;
     }
+
     public double getScore() {
         currentScore = startingScore - noRoomsVisited + (PUZZLE_VALUE * noPuzzlesSolves);
         return currentScore;

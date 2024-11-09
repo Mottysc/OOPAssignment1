@@ -7,6 +7,7 @@ public class Room {
     private Position position;
     private Item[] items;
 
+
     public Room(String name, String description, char symbol, Position position){
         this.name = name;
         this.description = description;
