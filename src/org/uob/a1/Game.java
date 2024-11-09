@@ -386,56 +386,58 @@ public class Game {
             boolean validChars = true;
             System.out.print("->> ");
             String guess = input.nextLine().toUpperCase();
+
+            if (guess.equals("GIVE UP")){
+                playing = false;
+                break;
+            }
+
             if (guess.length() != 4) {
-                if (guess.equals("GIVE UP")) {
-                    playing = false;
+                System.out.println("You only need four candles.");
+                continue;
+            }
+
+
+            for (int i = 0; i < 4; i++) {
+                char character = guess.charAt(i);
+                if (VALID_COLORS.indexOf(character) != -1) {
+                    validChars = false;
+                    System.out.println("One of the colours you provided is invalid. The colours available to you are:\nRed, Orange, Yellow, Green, Blue, Purple, White, Lime, Turquoise, and Cyan.");
                     break;
-                } else {
-                    System.out.println("You only need four candles.");
-                }
-            } else if (validChars) {
-
-                    for (int i = 0; i < 4; i++) {
-                        char character = guess.charAt(i);
-                        if (VALID_COLORS.indexOf(character) != -1) {
-                            validChars = false;
-                            System.out.println("One of the colours you provided is invalid. The colours available to you are:\nRed, Orange, Yellow, Green, Blue, Purple, White, Lime, Turquoise, and Cyan.");
-                            break;
-                        }
-                    }
-                    if (!validChars) {
-                        break;
-                    }
-
-                int CODE_LENGTH = 4;
-                int[] matches = new int[4];
-                int greens = 0;
-                int yellows = 0;
-
-                for (int i = 0; i < 4; i++) {
-                    if (guess.charAt(i) == ORDER.charAt(i)) {
-                        matches[i] = 1;
-                        greens++;
-                    }
-                    else {
-                        for (int j = 0; j < 4; j++) {
-                            if (guess.charAt(j) == ORDER.charAt(i)  &&  matches[j] == 0  &&  i != j) {
-                                matches[j] = 2;
-                                yellows++;
-                            }
-                        }
-                    }
-                }
-
-                System.out.println(greens + (greens == 1 ? " is " : " are ") + "in the menorah and seem"+ (greens == 1 ? "s":"") + " in the right place, " + yellows + (yellows == 1 ? " is " : " are ") + "in the menorah but "+(yellows == 1 ? "doesn't":"don't")+" look right to you.");
-                if (greens == 4) {
-                    rightOrder = true;
-                    System.out.println("Congratulations! \nYou look at the menorah, the candles look to be in the right order. You can check that off the list.\n+10 Points!");
-                    score.solvePuzzle();
-                    inv.removeItem("candles");
                 }
             }
-        }
+            if (!validChars) {
+                continue;
+            }
+
+            int CODE_LENGTH = 4;
+            int[] matches = new int[4];
+            int greens = 0;
+            int yellows = 0;
+
+            for (int i = 0; i < 4; i++) {
+                if (guess.charAt(i) == ORDER.charAt(i)) {
+                    matches[i] = 1;
+                    greens++;
+                }
+                else {
+                    for (int j = 0; j < 4; j++) {
+                        if (guess.charAt(j) == ORDER.charAt(i)  &&  matches[j] == 0  &&  i != j) {
+                            matches[j] = 2;
+                            yellows++;
+                        }
+                    }
+                }
+            }
+
+            System.out.println(greens + (greens == 1 ? " is " : " are ") + "in the menorah and seem"+ (greens == 1 ? "s":"") + " in the right place, " + yellows + (yellows == 1 ? " is " : " are ") + "in the menorah but "+(yellows == 1 ? "doesn't":"don't")+" look right to you.");
+            if (greens == 4) {
+                rightOrder = true;
+                System.out.println("Congratulations! \nYou look at the menorah, the candles look to be in the right order. You can check that off the list.\n+10 Points!");
+                score.solvePuzzle();
+                inv.removeItem("candles");
+                }
+            }
     }
 
     public static void lookItem(String itemName, Room currentRoom){
