@@ -1,20 +1,21 @@
 package org.uob.a1;
 import java.util.Scanner;
 public class Game {
+    //Set-up of the globally used variables
     static Score score = new Score(100);
     static Inventory inv = new Inventory();
-    static Position player = new Position(1, 0);
+    static Position player = new Position(1, 0); //Set up the starting position of the player, this is also used to ensure the player is in the right room when taking items, etc
     static Map map = new Map(6, 5);
-    static Room currentRoom;
     static Room[] rooms;
-    static boolean quit = false;
+    static Room currentRoom;
     static Person[] people;
-    static boolean wearingBoots = false;
+    static boolean quit = false;
+    static boolean wearingBoots = false; //Used for one of the puzzles
     static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
 
-        //Creating the areas
+        //Creating the Room objects and placing them on the map
         Room kitchen = new Room("the Kitchen", "You notice a hastily-written ToDo list stuck on the fridge. \nLooking out of the window, you can see the snowfall picking up. It's going to be a cold night. \nTo the south you see your living room.", 'k', new Position(1, 0));
         map.placeRoom(kitchen.getPosition(), kitchen.getSymbol());
         Room livingRoom = new Room("the Living Room", "You look around and see your menorah near the window with drips of wax from years gone by, next to it are the candles in a neat pile waiting to be lit. \nYour coffee table is adorned with a bowl full of gelt.\nTo your east is the hallway, and to the north is the kitchen.", 'l', new Position(1, 1));
@@ -46,6 +47,7 @@ public class Game {
 
         rooms = new Room[]{kitchen, livingRoom, diningRoom, attic, westRoad, eastRoad, northRoad, grandmaHouse, neighbour, hallway, shop, northMidRoad, splitRoad,eastMidRoad};
 
+        //I created a new class called Item, it's used for features in rooms as well as items that can be picked up
         Item todoList = new Item("Todo list", "You read the todo list, it says to go shopping, fry latkes, prepare the menorah, and put up the decorations. \nYou should probably help your mother and do some of these.");
         Item pan = new Item("Pan", "The frying pan is on the counter, ready to be used to make latkes.");
         Item menorah = new Item("Menorah", "It's your childhood menorah, you can see the signs of time through the little dents and scratches. Next to it is an assortment of candles neatly prepared.");
@@ -61,20 +63,26 @@ public class Game {
         Item decorations = new Item("Decorations", "It's the decorations you need to put up outside your house. Your mother would be really appreciative if you did this.", true);
         Item keepsakes = new Item("Keepsakes", "It's some old keepsakes that your mother has kept for a few years. They look delicate.");
         Item photo = new Item("Photo", "It's an old family photo your grandma loves. On it you can see your family; your uncle Richard, your aunt Barbra, your Grandma, and your dad Patrick.");
+
+        //Adding the items to their respective rooms, this is to ensure that the player is in the right room when interacting with a feature/item
         kitchen.setItems(new Item[]{todoList, pan});
         livingRoom.setItems(new Item[]{candles, menorah, gelt});
         hallway.setItems(new Item[]{boots});
         shop.setItems(new Item[]{potatoes, flour, sweets, oil});
         diningRoom.setItems(new Item[]{gift});
+        grandmaHouse.setItems(new Item[]{photo});
         attic.setItems(new Item[]{oldBox, decorations, keepsakes});
 
+        //Creating the people and their line of dialogue
         Person mother = new Person("Your mother", diningRoom, "Please make sure you finish all the items on your ToDo list that I left on the fridge. Also, go give your grandma a visit, she would appreciate your presence.");
         Person grandma = new Person("Grandma", grandmaHouse, "Hey! I'm so glad to decided to come visit me! ");
-        Person neighbourKid = new Person("Kid", neighbour, "Hey neighbour! I don't have anyone to play dreidel with, could you please play with me? Use your gelt and I'll owe you one if you win.");
+        Person neighbourKid = new Person("Kid", neighbour, "Hey neighbour! I don't have any Hanukkah Gelt this year, do you have any? I would really appreciate it!");
         Person shopkeeper = new Person("Shopkeeper", shop, "Hey, welcome to the shop. As it's the season of giving, everything will be free tonight, take whatever you need. Happy holidays!");
         people = new Person[]{mother, grandma, neighbourKid, shopkeeper};
 
+        //Starting the game
         currentRoom = kitchen;
+        System.out.println("You wake up from an afternoon nap after school, you feel groggy from the sleep but are excited for the festivities tonight.");
         System.out.print("You enter " + currentRoom.getName() + ". ");
         System.out.println(currentRoom.getDescription());
 
@@ -87,12 +95,12 @@ public class Game {
     }
 
     public static void processCommand(String command) {
-        //set up processing the command
+        //Set up processing the command
         String[] parts = command.split(" ", 2);
-        boolean hasFeature = false;
+        boolean hasFeature = false; //For example, "look <feature>" or "move north"
         String commandWord = parts[0].toLowerCase();
         String feature = null;
-        //see if an item/feature/direction was specified
+        //See if an item/feature/direction was specified
         if (parts.length > 1){
             feature = parts[1].toLowerCase();
             hasFeature = true;
@@ -118,7 +126,7 @@ public class Game {
                 }
                 else {
                     switch (feature) {
-                        case "north":
+                        case "north", "up":
                             if (player.y != 0 && tryMove(player, 0, -1)){
                                 player.y -= 1;
                             }
@@ -126,7 +134,7 @@ public class Game {
                                 System.out.println("You realise there's nothing for you if you move north.");
                             }
                             break;
-                        case "east":
+                        case "east", "left":
                             if (player.y != map.width-1 && tryMove(player, +1, 0)){
                                 player.x += 1;
                             }
@@ -134,7 +142,7 @@ public class Game {
                                 System.out.println("You realise there's nothing for you if you move east.");
                             }
                             break;
-                        case "south":
+                        case "south", "down":
                             if (player.y != map.height-1 && tryMove(player, 0, 1)){
                                 if (currentRoom == rooms[9]){
                                     if (wearingBoots) {
@@ -153,7 +161,7 @@ public class Game {
 
                             }
                             break;
-                        case "west":
+                        case "west", "right":
                             if (player.x != 0 && tryMove(player, -1, 0)){
                                 player.x -= 1;
 
@@ -167,7 +175,7 @@ public class Game {
                             break;
                     }
                 }
-                //update the current room and print the room description if you enter a new room.
+                //Update the current room and print the room description if you enter a new room.
                 Room oldroom = currentRoom;
                 for (Room room : rooms) {
                     if (room.getPosition().y == player.y && room.getPosition().x == player.x) {
@@ -315,25 +323,37 @@ public class Game {
                             else {
                                 System.out.println("You don't have any gift on you, maybe there's one somewhere at home.");
                             }
-                        case "potatoes":
-                            if (inv.hasItem("potatoes") != -1){
+                        case "potatoes", "oil":
+                            if (inv.hasItem("potatoes") != -1 && inv.hasItem("oil") != -1){
                                 if (currentRoom != rooms[0]){
                                     System.out.println("You should save the potatoes for when you're in the kitchen and make latkes for your mother.");
                                 }
                                 else {
-                                    if (inv.hasItem("oil") != -1) {
                                         System.out.println("You peel the potatoes, grate them, add oil to the pan, and turn on the stove.\nYou create the latkes patties and carefully place them into the hot oil. \nThey sizzle as they turn a golden-brown colour before you remove them, ready to eat.\nYou have successfully made the latkes.\n+10 Points!");
                                         inv.removeItem("oil");
                                         inv.removeItem("potatoes");
                                         score.solvePuzzle();
                                     }
-                                    else {
-                                        System.out.println("You should probably hurry back and also get oil from shop to fry the latkes...");
-                                    }
+                                }
+                            else {
+                                if (inv.hasItem("oil") != -1) {
+                                    System.out.println("You should probably hurry back and also get oil from shop to fry the latkes...");
+                                }
+                                else {
+                                    System.out.println("You don't have any potatoes on you, you should get some from the shop.");
                                 }
                             }
-                            else {
-                                System.out.println("You don't have any potatoes on you, you should get some from the shop.");
+                            break;
+                        case "decorations":
+                            if (inv.hasItem("decorations") != -1) {
+                                if (currentRoom != rooms[6]){
+                                    System.out.println("You want to put up the decorations, but should go to the front of your house for that.");
+                                }
+                                else {
+                                    System.out.println("You work hard and place the decorations along the front of your house. Despite the cold outside, you manage to work up a sweat.\nYou stand back and admire your work, feeling happy with yourself.\n+10 Points!");
+                                    inv.removeItem("decorations");
+                                    score.solvePuzzle();
+                                }
                             }
                             break;
                         default:
@@ -345,7 +365,7 @@ public class Game {
 
             case "quit":
                 quit = true;
-                System.out.println("Goobye.");
+                System.out.println("Goodbye.");
                 break;
 
             case "help":
@@ -427,18 +447,18 @@ public class Game {
                 continue;
             }
 
-            int CODE_LENGTH = 4;
+            final int CODE_LENGTH = 4;
             int[] matches = new int[4];
             int greens = 0;
             int yellows = 0;
 
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < CODE_LENGTH; i++) {
                 if (guess.charAt(i) == ORDER.charAt(i)) {
                     matches[i] = 1;
                     greens++;
                 }
                 else {
-                    for (int j = 0; j < 4; j++) {
+                    for (int j = 0; j < CODE_LENGTH; j++) {
                         if (guess.charAt(j) == ORDER.charAt(i)  &&  matches[j] == 0  &&  i != j) {
                             matches[j] = 2;
                             yellows++;
@@ -448,7 +468,7 @@ public class Game {
             }
 
             System.out.println(greens + (greens == 1 ? " is " : " are ") + "in the menorah and seem"+ (greens == 1 ? "s":"") + " in the right place, " + yellows + (yellows == 1 ? " is " : " are ") + "in the menorah but "+(yellows == 1 ? "doesn't":"don't")+" look right to you.");
-            if (greens == 4) {
+            if (greens == CODE_LENGTH) {
                 rightOrder = true;
                 System.out.println("Congratulations! \nYou look at the menorah, the candles look to be in the right order. You can check that off the list.\n+10 Points!");
                 score.solvePuzzle();
