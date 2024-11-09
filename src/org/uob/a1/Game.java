@@ -399,8 +399,12 @@ public class Game {
                         char character = guess.charAt(i);
                         if (VALID_COLORS.indexOf(character) != -1) {
                             validChars = false;
+                            System.out.println("One of the colours you provided is invalid. The colours available to you are:\nRed, Orange, Yellow, Green, Blue, Purple, White, Lime, Turquoise, and Cyan.");
                             break;
                         }
+                    }
+                    if (!validChars) {
+                        break;
                     }
 
                 int CODE_LENGTH = 4;
