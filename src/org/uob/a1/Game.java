@@ -379,7 +379,8 @@ public class Game {
         System.out.println("You are trying to remember the order of the candles. You know that you only need to use four candles today. \nThe candles available to you are:\nRed, Orange, Yellow, Green, Blue, Purple, White, Lime, Turquoise, and Cyan.\nTo figure out the right order, use the first initial of each colour and guess the correct order.\nGiven your guess you will receive an answer based on your guess. \nThe candles can either be the right colour in the wrong place, the right colour and the right place, or the wrong colour.\nType \"give up\" to stop playing.");
         boolean rightOrder = false;
         boolean playing = true;
-        String order = "RBGP";
+        final String ORDER = "RBGP";
+        final String VALID_COLORS = "RGBPYCTWOC";
 
         while (playing && !rightOrder) {
             boolean validChars = true;
@@ -396,7 +397,7 @@ public class Game {
 
                     for (int i = 0; i < 4; i++) {
                         char character = guess.charAt(i);
-                        if (character != 'R' && character != 'G' && character != 'B' && character != 'P' && character != 'O' && character != 'W' && character != 'Y' && character != 'T' && character != 'C') {
+                        if (VALID_COLORS.indexOf(character) != -1) {
                             validChars = false;
                             break;
                         }
@@ -408,13 +409,13 @@ public class Game {
                 int yellows = 0;
 
                 for (int i = 0; i < 4; i++) {
-                    if (guess.charAt(i) == order.charAt(i)) {
+                    if (guess.charAt(i) == ORDER.charAt(i)) {
                         matches[i] = 1;
                         greens++;
                     }
                     else {
                         for (int j = 0; j < 4; j++) {
-                            if (guess.charAt(j) == order.charAt(i)  &&  matches[j] == 0  &&  i != j) {
+                            if (guess.charAt(j) == ORDER.charAt(i)  &&  matches[j] == 0  &&  i != j) {
                                 matches[j] = 2;
                                 yellows++;
                             }
