@@ -28,7 +28,6 @@ public class Inventory {
                 break;
             }
         }
-
     }
 
     //Remove an item from the inventory
