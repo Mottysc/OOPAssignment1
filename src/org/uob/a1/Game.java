@@ -96,312 +96,291 @@ public class Game {
         }
     }
 
-  // Used to process the input
-  public static void processCommand(String command) {
-    // Set up processing the command
-    String[] parts = command.split(" ", 2);
-    boolean hasFeature = false; // For example, "look <feature>" or "move north"
-    String commandWord = parts[0].toLowerCase();
-    String feature = null;
-    // See if an item/feature/direction was specified
-    if (parts.length > 1) {
-      feature = parts[1].toLowerCase();
-      hasFeature = true;
-    }
-
-    switch (commandWord) {
-      case "look":
-        if (!hasFeature) {
-          System.out.println(currentRoom.getDescription());
-        } else {
-          lookItem(feature, currentRoom);
+    //Used to process the input
+    public static void processCommand(String command) {
+        //Set up processing the command
+        String[] parts = command.split(" ", 2);
+        boolean hasFeature = false; //For example, "look <feature>" or "move north"
+        String commandWord = parts[0].toLowerCase();
+        String feature = null;
+        //See if an item/feature/direction was specified
+        if (parts.length > 1) {
+            feature = parts[1].toLowerCase();
+            hasFeature = true;
         }
-        break;
 
-      case "score":
-        System.out.println("Your current score is: " + score.getScore());
-        break;
-
-      case "move":
-        if (!hasFeature) { // If no direction is provided
-          System.out.println(
-              "You spin around and decide you'd rather move in a specific direction.");
-        } else {
-          switch (feature) {
-            case "north":
-              if (player.y != 0 && tryMove(player, 0, -1)) {
-                player.y -= 1;
-              } else {
-                System.out.println("You realise there's nothing for you if you move north.");
-              }
-              break;
-            case "east":
-              if (player.y != map.width - 1 && tryMove(player, +1, 0)) {
-                player.x += 1;
-              } else {
-                System.out.println("You realise there's nothing for you if you move east.");
-              }
-              break;
-            case "south":
-              if (player.y != map.height - 1 && tryMove(player, 0, 1)) {
-                // If you're in the Hallway, there's a puzzle to ensure that the player is wearing
-                // boots before leaving the house
-                if (currentRoom == rooms[9]) {
-                  if (wearingBoots) {
-                    player.y += 1;
-                  } else {
-                    System.out.println(
-                        "It's getting cold outside, you should find your boots and put them on before leaving.");
-                  }
+        switch (commandWord) {
+            case "look":
+                if (!hasFeature) {
+                    System.out.println(currentRoom.getDescription());
                 } else {
-                  player.y += 1;
+                    lookItem(feature, currentRoom);
                 }
-              } else {
-                System.out.println("You realise there's nothing for you if you move south.");
-              }
-              break;
-            case "west":
-              if (player.x != 0 && tryMove(player, -1, 0)) {
-                player.x -= 1;
-
-              } else {
-                System.out.println("You realise there's nothing for you if you move west.");
-              }
-              break;
-            default:
-              System.out.println("You don't know how to move like that.");
-              break;
-          }
-        }
-        // Update the current room and print the room description if you enter a new room.
-        Room oldroom = currentRoom;
-        for (Room room : rooms) {
-          if (room.getPosition().y == player.y && room.getPosition().x == player.x) {
-            currentRoom = room;
-            if (!currentRoom.equals(oldroom)) {
-              System.out.println("You enter " + currentRoom.getName() + ". ");
-              score.visitRoom();
-            }
-            break;
-          }
-        }
-        break;
-
-      case "map":
-        System.out.println(map.display());
-        break;
-
-      case "talk":
-        if (!hasFeature) {
-          System.out.println("You mutter something to yourself");
-        } else {
-          switch (feature) {
-            case "mum", "mother", "your mother", "your mum", "to mum":
-              if (currentRoom == people[0].getRoom()) {
-                System.out.println(people[0].speak());
-              } else {
-                System.out.println(
-                    "You think you should go find your mother and talk to her. She might be in the dining room");
-              }
-              break;
-            case "grandma", "grandmother", "your grandma", "your grandmother", "to grandma":
-              if (currentRoom == people[1].getRoom()) {
-                System.out.print(people[1].speak());
-                if (inv.hasItem("gift") != -1) {
-                  // There is an optional puzzle I added, if you bring the gift to your grandma, she
-                  // thanks you and you gain points.
-                  System.out.println(
-                      "Thank you so much for bringing me a gift, I really do appreciate it!\n+10 Points!");
-                  score.solvePuzzle();
-                } else {
-                  System.out.println(" ");
-                }
-              } else {
-                System.out.println(
-                    "You think you should travel to your grandma's house and talk to her.");
-              }
-              break;
-
-            case "kid", "neighbour", "neighbour's kid", "to kid":
-              if (currentRoom == people[2].getRoom()) {
-                System.out.println(people[2].speak());
-              } else {
-                System.out.println(
-                    "You think that the neighbour's kid is most likely at their house at this time of the night.");
-              }
-              break;
-
-            case "shopkeeper":
-              if (currentRoom == people[3].getRoom()) {
-                System.out.println(people[3].speak());
-              } else {
-                System.out.println(
-                    "You're not sure why you want to talk to the shopkeeper now. You're not even in the shop.");
-              }
-              break;
-
-            default:
-              System.out.println("You don't know anyone who goes by that name.");
-              break;
-          }
-        }
-        break;
-
-      case "take":
-        if (!hasFeature) {
-          System.out.println("You don't know what to pick up.");
-        } else {
-          boolean found = false;
-          for (Item item : currentRoom.getItems()) {
-            if (item != null && feature.equalsIgnoreCase(item.getName())) {
-              if (item.canPickUp) {
-                Item[] copyItems = currentRoom.getItems();
-                for (int i = 0; i < copyItems.length; i++) {
-                  // Remove the item from the room
-                  if (item.equals(copyItems[i])) {
-                    copyItems[i] = null;
-                    break;
-                  }
-                }
-                currentRoom.setItems(copyItems);
-                inv.addItem(item.getName(), item.getDescription());
-                System.out.println("You pick up the " + item.getName() + ".");
-                found = true;
                 break;
-              } else {
-                System.out.println("You know you shouldn't pick that up.");
-                found = true;
+
+            case "score":
+                System.out.println("Your current score is: " + score.getScore());
                 break;
-              }
-            }
-          }
-          if (!found) {
-            System.out.println("You can't find that item to pick up.");
-          }
-        }
-        break;
 
-      case "inventory":
-        if (inv.isEmpty()) {
-          System.out.println("You don't have any items in your inventory.");
-        } else {
-          System.out.println("You look into your pockets and see: " + inv.displayInventory());
-        }
-        break;
-
-      // Use an item in your inventory
-      case "use":
-        if (!hasFeature) {
-          System.out.println(
-              "You want to use an item in your inventory, but aren't sure what specifically.");
-        } else {
-          switch (feature) {
-            case "boots":
-              if (inv.hasItem("boots") != -1) {
-                if (player == rooms[9].getPosition()) {
-                  System.out.println(
-                      "You put on your boots and are now ready to venture outside\n+10 Points!");
-                  inv.removeItem("boots");
-                  score.solvePuzzle();
-                  wearingBoots = true;
+            case "move":
+                if (!hasFeature) { //If no direction is provided
+                    System.out.println("You spin around and decide you'd rather move in a specific direction.");
                 } else {
-                  System.out.println("You should go to the hallway to put on your boots.");
+                    switch (feature) {
+                        case "north":
+                            if (player.y != 0 && tryMove(player, 0, -1)) {
+                                player.y -= 1;
+                            } else {
+                                System.out.println("You realise there's nothing for you if you move north.");
+                            }
+                            break;
+                        case "east":
+                            if (player.y != map.width - 1 && tryMove(player, +1, 0)) {
+                                player.x += 1;
+                            } else {
+                                System.out.println("You realise there's nothing for you if you move east.");
+                            }
+                            break;
+                        case "south":
+                            if (player.y != map.height - 1 && tryMove(player, 0, 1)) {
+                                //If you're in the Hallway, there's a puzzle to ensure that the player is wearing boots before leaving the house
+                                if (currentRoom == rooms[9]) {
+                                    if (wearingBoots) {
+                                        player.y += 1;
+                                    } else {
+                                        System.out.println("It's getting cold outside, you should find your boots and put them on before leaving.");
+                                    }
+                                } else {
+                                    player.y += 1;
+                                }
+                            } else {
+                                System.out.println("You realise there's nothing for you if you move south.");
+
+                            }
+                            break;
+                        case "west":
+                            if (player.x != 0 && tryMove(player, -1, 0)) {
+                                player.x -= 1;
+
+                            } else {
+                                System.out.println("You realise there's nothing for you if you move west.");
+                            }
+                            break;
+                        default:
+                            System.out.println("You don't know how to move like that.");
+                            break;
+                    }
                 }
-              } else {
-                System.out.println("You don't have your boots in your hands.");
-              }
-              break;
-            case "candles":
-              if (inv.hasItem("candles") != -1) {
-                if (player == rooms[1].getPosition()) {
-                  playMastermind();
+                //Update the current room and print the room description if you enter a new room.
+                Room oldroom = currentRoom;
+                for (Room room : rooms) {
+                    if (room.getPosition().y == player.y && room.getPosition().x == player.x) {
+                        currentRoom = room;
+                        if (!currentRoom.equals(oldroom)) {
+                            System.out.println("You enter " + currentRoom.getName() + ". ");
+                            score.visitRoom();
+                        }
+                        break;
+                    }
+                }
+                break;
+
+            case "map":
+                System.out.println(map.display());
+                break;
+
+            case "talk":
+                if (!hasFeature) {
+                    System.out.println("You mutter something to yourself");
                 } else {
-                  System.out.println(
-                      "These candles are for your menorah in your living room, you should use them there.");
-                }
-              } else {
-                System.out.println("You can't use the candles if you haven't picked them up.");
-              }
-              break;
+                    switch (feature) {
+                        case "mum", "mother", "your mother", "your mum", "to mum":
+                            if (currentRoom == people[0].getRoom()) {
+                                System.out.println(people[0].speak());
+                            } else {
+                                System.out.println("You think you should go find your mother and talk to her. She might be in the dining room");
+                            }
+                            break;
+                        case "grandma", "grandmother", "your grandma", "your grandmother", "to grandma":
+                            if (currentRoom == people[1].getRoom()) {
+                                System.out.print(people[1].speak());
+                                if (inv.hasItem("gift") != -1) {
+                                    //There is an optional puzzle I added, if you bring the gift to your grandma, she thanks you and you gain points.
+                                    System.out.println("Thank you so much for bringing me a gift, I really do appreciate it!\n+10 Points!");
+                                    score.solvePuzzle();
+                                } else {
+                                    System.out.println(" ");
+                                }
+                            } else {
+                                System.out.println("You think you should travel to your grandma's house and talk to her.");
+                            }
+                            break;
 
-            case "gift":
-              if (inv.hasItem("gift") != -1) {
-                if (player != rooms[7].getPosition()) {
-                  System.out.println("You should probably go give your gift to your grandma.");
-                }
-              } else {
-                System.out.println(
-                    "You don't have any gift on you, maybe there's one somewhere at home.");
-              }
-              break;
+                        case "kid", "neighbour", "neighbour's kid", "to kid":
+                            if (currentRoom == people[2].getRoom()) {
+                                System.out.println(people[2].speak());
+                            } else {
+                                System.out.println("You think that the neighbour's kid is most likely at their house at this time of the night.");
+                            }
+                            break;
 
-            case "potatoes", "oil":
-              if (inv.hasItem("potatoes") != -1 && inv.hasItem("oil") != -1) {
-                if (player == rooms[0].getPosition()) {
-                  System.out.println(
-                      "You peel the potatoes, grate them, add oil to the pan, and turn on the stove.\nYou create the latkes patties and carefully place them into the hot oil. \nThey sizzle as they turn a golden-brown colour before you remove them, ready to eat.\nYou have successfully made the latkes.\n+10 Points!");
-                  inv.removeItem("oil");
-                  inv.removeItem("potatoes");
-                  score.solvePuzzle();
+                        case "shopkeeper":
+                            if (currentRoom == people[3].getRoom()) {
+                                System.out.println(people[3].speak());
+                            } else {
+                                System.out.println("You're not sure why you want to talk to the shopkeeper now. You're not even in the shop.");
+                            }
+                            break;
+
+                        default:
+                            System.out.println("You don't know anyone who goes by that name.");
+                            break;
+                    }
+                }
+                break;
+
+            case "take":
+                if (!hasFeature) {
+                    System.out.println("You don't know what to pick up.");
                 } else {
-                  System.out.println(
-                      "You should save the potatoes for when you're in the kitchen and make latkes for your mother.");
+                    boolean found = false;
+                    for (Item item : currentRoom.getItems()) {
+                        if (item != null && feature.equalsIgnoreCase(item.getName())) {
+                            if (item.canPickUp) {
+                                Item[] copyItems = currentRoom.getItems();
+                                for (int i = 0; i < copyItems.length; i++) {
+                                    //Remove the item from the room
+                                    if (item.equals(copyItems[i])) {
+                                        copyItems[i] = null;
+                                        break;
+                                    }
+                                }
+                                currentRoom.setItems(copyItems);
+                                inv.addItem(item.getName(), item.getDescription());
+                                System.out.println("You pick up the " + item.getName() + ".");
+                                found = true;
+                                break;
+                            } else {
+                                System.out.println("You know you shouldn't pick that up.");
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("You can't find that item to pick up.");
+                    }
                 }
-              } else {
-                if (inv.hasItem("oil") != -1) {
-                  System.out.println(
-                      "You should probably hurry back and also get oil from shop to fry the latkes...");
+                break;
+
+            case "inventory":
+                if (inv.isEmpty()) {
+                    System.out.println("You don't have any items in your inventory.");
                 } else {
-                  System.out.println(
-                      "You don't have any potatoes on you, you should get some from the shop.");
+                    System.out.println("You look into your pockets and see: " + inv.displayInventory());
                 }
-              }
-              break;
+                break;
 
-            case "gelt":
-              if (inv.hasItem("gelt") != -1) {
-                if (player == rooms[8].getPosition()) {
-                  System.out.println(
-                      "The neighbour's kid is very grateful for your Hanukkah Gelt. He looks very happy with himself, and it warms your heart.\n+10 Points!");
-                  inv.removeItem("gelt");
-                  score.solvePuzzle();
-                }
-              } else {
-                System.out.println(
-                    "You don't have any Hanukkah Gelt on you. You should check your house.");
-              }
-              break;
-
-            case "decorations":
-              if (inv.hasItem("decorations") != -1) {
-                if (player == rooms[6].getPosition()) {
-                  System.out.println(
-                      "You work hard and place the decorations along the front of your house. Despite the cold outside, you manage to work up a sweat.\nYou stand back and admire your work, feeling happy with yourself.\n+10 Points!");
-                  inv.removeItem("decorations");
-                  score.solvePuzzle();
+            //Use an item in your inventory
+            case "use":
+                if (!hasFeature) {
+                    System.out.println("You want to use an item in your inventory, but aren't sure what specifically.");
                 } else {
-                  System.out.println(
-                      "You want to put up the decorations, but should go to the front of your house for that.");
+                    switch (feature) {
+                        case "boots":
+                            if (inv.hasItem("boots") != -1) {
+                                if (player == rooms[9].getPosition()) {
+                                    System.out.println("You put on your boots and are now ready to venture outside\n+10 Points!");
+                                    inv.removeItem("boots");
+                                    score.solvePuzzle();
+                                    wearingBoots = true;
+                                } else {
+                                    System.out.println("You should go to the hallway to put on your boots.");
+                                }
+                            } else {
+                                System.out.println("You don't have your boots in your hands.");
+                            }
+                            break;
+                        case "candles":
+                            if (inv.hasItem("candles") != -1) {
+                                if (player == rooms[1].getPosition()) {
+                                    playMastermind();
+                                } else {
+                                    System.out.println("These candles are for your menorah in your living room, you should use them there.");
+                                }
+                            } else {
+                                System.out.println("You can't use the candles if you haven't picked them up.");
+                            }
+                            break;
+
+                        case "gift":
+                            if (inv.hasItem("gift") != -1) {
+                                if (player != rooms[7].getPosition()) {
+                                    System.out.println("You should probably go give your gift to your grandma.");
+                                }
+                            } else {
+                                System.out.println("You don't have any gift on you, maybe there's one somewhere at home.");
+                            }
+                            break;
+
+                        case "potatoes", "oil":
+                            if (inv.hasItem("potatoes") != -1 && inv.hasItem("oil") != -1) {
+                                if (player == rooms[0].getPosition()) {
+                                    System.out.println("You peel the potatoes, grate them, add oil to the pan, and turn on the stove.\nYou create the latkes patties and carefully place them into the hot oil. \nThey sizzle as they turn a golden-brown colour before you remove them, ready to eat.\nYou have successfully made the latkes.\n+10 Points!");
+                                    inv.removeItem("oil");
+                                    inv.removeItem("potatoes");
+                                    score.solvePuzzle();
+                                } else {
+                                    System.out.println("You should save the potatoes for when you're in the kitchen and make latkes for your mother.");
+                                }
+                            } else {
+                                if (inv.hasItem("oil") != -1) {
+                                    System.out.println("You should probably hurry back and also get oil from shop to fry the latkes...");
+                                } else {
+                                    System.out.println("You don't have any potatoes on you, you should get some from the shop.");
+                                }
+                            }
+                            break;
+
+                        case "gelt":
+                            if (inv.hasItem("gelt") != -1) {
+                                if (player == rooms[8].getPosition()) {
+                                    System.out.println("The neighbour's kid is very grateful for your Hanukkah Gelt. He looks very happy with himself, and it warms your heart.\n+10 Points!");
+                                    inv.removeItem("gelt");
+                                    score.solvePuzzle();
+                                }
+                            } else {
+                                System.out.println("You don't have any Hanukkah Gelt on you. You should check your house.");
+                            }
+                            break;
+
+                        case "decorations":
+                            if (inv.hasItem("decorations") != -1) {
+                                if (player == rooms[6].getPosition()) {
+                                    System.out.println("You work hard and place the decorations along the front of your house. Despite the cold outside, you manage to work up a sweat.\nYou stand back and admire your work, feeling happy with yourself.\n+10 Points!");
+                                    inv.removeItem("decorations");
+                                    score.solvePuzzle();
+                                } else {
+                                    System.out.println("You want to put up the decorations, but should go to the front of your house for that.");
+                                }
+                            }
+                            break;
+
+                        default:
+                            System.out.println("You should specify something from in your inventory to use.");
+                            break;
+                    }
                 }
-              }
-              break;
+                break;
 
-            default:
-              System.out.println("You should specify something from in your inventory to use.");
-              break;
-          }
-        }
-        break;
+            case "quit":
+                quit = true;
+                System.out.println("Goodbye.");
+                break;
 
-      case "quit":
-        quit = true;
-        System.out.println("Goodbye.");
-        break;
-
-      case "help":
-        // Display the help message
-        String helpMessage =
-            """
+            case "help":
+                //Display the help message
+                String helpMessage = """
                         Here are the commands you can use:
                          • "help" - Displays this help message.
                          • "inventory" - Displays a list of all the items you have.
@@ -416,14 +395,14 @@ public class Game {
                          • "use <item>" - Use an item from your inventory.
                          • "quit" - Quits the game
                         """;
-        System.out.println(helpMessage);
-        break;
+                System.out.println(helpMessage);
+                break;
 
-      default:
-        // If none of the valid commands were provided
-        System.out.println("You're not sure what to do right now...");
+            default:
+                //If none of the valid commands were provided
+                System.out.println("You're not sure what to do right now...");
+        }
     }
-  }
 
     public static boolean tryMove(Position currentPosition, int xDelta, int yDelta) {
         //Ensure that the area the player is moving to is not empty
