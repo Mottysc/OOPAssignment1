@@ -18,19 +18,19 @@ public class Game {
     public static void main(String[] args) {
 
         //Creating the Room objects and placing them on the map
-        Room kitchen = new Room("the Kitchen", "You notice a hastily-written ToDo list stuck on the fridge. \nLooking out of the window, you can see the snowfall picking up. It's going to be a cold night. \nTo the south you see your living room.", 'k', new Position(1, 0));
+        Room kitchen = new Room("the Kitchen", "The kitchen feels cosy, with a hastily-written ToDo list on the fridge and an empty frying pan on the counter.\nTo the south, you see the entrance to the living room, while outside, snow falls softly, blanketing everything in white.", 'k', new Position(1, 0));
         map.placeRoom(kitchen.getPosition(), kitchen.getSymbol());
         Room livingRoom = new Room("the Living Room", "You look around and see your menorah near the window with drips of wax from years gone by, next to it are the candles in a neat pile waiting to be lit. \nYour coffee table is adorned with a bowl full of gelt.\nTo your east is the hallway, and to the north is the kitchen.", 'l', new Position(1, 1));
         map.placeRoom(livingRoom.getPosition(), livingRoom.getSymbol());
-        Room hallway = new Room("the Hallway", "A cluttered hallway lays before you. Your family's coats and scarves are hung up waiting to be used. \nYou can see your boots laying on the floor, still covered with bits of snow from earlier in the day. \nYour front door is to the south of you, your living room to the west, and the dining room in the east.", 'h', new Position(2, 1));
+        Room hallway = new Room("the Hallway", "A cluttered hallway lies before you. Your family’s coats and scarves are hung up, waiting to be used. \nYou can see your boots laying on the floor, still covered with bits of snow from earlier in the day. \nYour front door is to the south of you, your living room to the west, and the dining room in the east.", 'h', new Position(2, 1));
         map.placeRoom(hallway.getPosition(), hallway.getSymbol());
-        Room grandmaHouse = new Room("Grandma's House", "Grandma’s house is warm and inviting, with the soft glow of the fireplace and the scent of fresh cookies in the air. \nGrandma sits in her favorite chair, knitting with a gentle smile, surrounded by cozy blankets and an old photo on the wall.", 'g', new Position(5, 4));
+        Room grandmaHouse = new Room("Grandma's House", "Grandma’s house is warm and inviting, with the soft glow of the fireplace and the scent of fresh cookies in the air. \nGrandma sits in her favourite chair, knitting with a gentle smile, surrounded by cosy blankets and an old photo on the wall.", 'g', new Position(5, 4));
         map.placeRoom(grandmaHouse.getPosition(), grandmaHouse.getSymbol());
-        Room shop = new Room("the Shop", "The shop is small but cozy, with shelves lined with potatoes, bottles of oil, bags of flour, some sweets, and some other tasty goods.\nThe warm light spills from the window, casting a friendly glow over the space.\nBehind the counter, a kind-looking shopkeeper greets you with a smile, her eyes friendly and welcoming as she tidies the cluttered shelves.", 's', new Position(0, 4));
+        Room shop = new Room("the Shop", "The shop is small but cosy, with shelves lined with potatoes, bottles of oil, bags of flour, some sweets, and other tasty goods.\nThe warm light spills from the window, casting a friendly glow over the space.\nBehind the counter, a kind-looking shopkeeper greets you with a smile, her eyes friendly and welcoming as she tidies the cluttered shelves.", 's', new Position(0, 4));
         map.placeRoom(shop.getPosition(), shop.getSymbol());
-        Room neighbour = new Room("the Neighbour's House", "The neighbor’s house is quiet, with dim lights glowing through the curtains. Inside, a young boy sits by the window, looking out with a sad expression on his face. You have an urge to ask him what's wrong.", 'n', new Position(3, 3));
+        Room neighbour = new Room("the Neighbour's House", "The neighbour’s house is quiet, dimly lit with soft light through the curtains. Inside, a young boy sits by the window, looking out with a sad expression.", 'n', new Position(3, 3));
         map.placeRoom(neighbour.getPosition(), neighbour.getSymbol());
-        Room diningRoom = new Room("the Dining Room", "The table is laid, ready for a nice meal. You see your mother sitting near the table, relaxing. You notice a small gift box next to her.", 'd', new Position(3, 1));
+        Room diningRoom = new Room("the Dining Room", "The table is laid, ready for a nice meal. You see your mum sitting near the table, relaxing. You notice a small gift box next to her.", 'd', new Position(3, 1));
         map.placeRoom(diningRoom.getPosition(), diningRoom.getSymbol());
         Room attic = new Room("the Attic", "The attic is dim and dusty, filled with storage boxes of decorations and childhood memories. A small window lets in a sliver of moonlight, casting shadows over the cluttered space.", 'a', new Position(3, 0));
         map.placeRoom(attic.getPosition(), attic.getSymbol());
@@ -38,33 +38,33 @@ public class Game {
         map.placeRoom(westRoad.getPosition(), westRoad.getSymbol());
         Room eastRoad = new Room("the Road", "A gentle glow comes from Grandma's house to the east, a nice contrast to the dark road. The path back to the fork lies westward, while the faint sounds of nearby houses blend into the still night.", 'r', new Position(4, 4));
         map.placeRoom(eastRoad.getPosition(), eastRoad.getSymbol());
-        Room northRoad = new Room("the Road", "You see your house to the north. The lights in the living room and dining room shining in the dark of the night. The road is quiet and deserted, only lit by the street lamps from the road to the south.", 'r', new Position(2, 2));
+        Room northRoad = new Room("the Road", "You see your house to the north, with lights shining in the living room and dining room against the dark night. The road is quiet and deserted, only lit by street lamps to the south.", 'r', new Position(2, 2));
         map.placeRoom(northRoad.getPosition(), northRoad.getSymbol());
-        Room northMidRoad = new Room("the Road", "As you continue down the road, you see the houses with the warm glows of Christmas trees and Menorahs.\nThe snow continues fall as you walk, crunching underneath your steps. You see your house further north and the the corner road on your south.", 'r', new Position(2, 3));
+        Room northMidRoad = new Room("the Road", "As you continue down the road, you see houses with the warm glows of Christmas trees and menorahs.\nSnow continues to fall as you walk, crunching beneath your steps. Your house is further north, and the fork in the road lies to the south.", 'r', new Position(2, 3));
         map.placeRoom(northMidRoad.getPosition(), northMidRoad.getSymbol());
-        Room splitRoad = new Room("the corner Road", "The road is at a fork. You can walk north to go to your house, east to get to your grandma's house or your neighbour's house, or you can go west to the shop.", 'r', new Position(2, 4));
+        Room splitRoad = new Room("the Corner Road", "The road splits here. You can walk north to your house, east to Grandma's or the neighbour's house, or west to the shop.", 'r', new Position(2, 4));
         map.placeRoom(splitRoad.getPosition(), splitRoad.getSymbol());
-        Room eastMidRoad = new Room("the Road", "You continue down the road. To your north is your neighbour's house, further east is your grandma's house, further west is the corner road.", 'r', new Position(3, 4));
+        Room eastMidRoad = new Room("the Road", "As you walk down the road, you see your neighbour's house to the north. To the east is Grandma’s house, and the fork in the road lies further west.", 'r', new Position(3, 4));
         map.placeRoom(eastMidRoad.getPosition(), eastMidRoad.getSymbol());
 
         rooms = new Room[]{kitchen, livingRoom, diningRoom, attic, westRoad, eastRoad, northRoad, grandmaHouse, neighbour, hallway, shop, northMidRoad, splitRoad, eastMidRoad};
 
-        //I created a new class called Item, it's used for features in rooms as well as items that can be picked up
-        Item todoList = new Item("Todo list", "You read the todo list, it says to go shopping, fry latkes, prepare the menorah, and put up the decorations. \nYou should probably help your mother and do some of these.");
-        Item pan = new Item("Pan", "The frying pan is on the counter, ready to be used to make latkes.");
-        Item menorah = new Item("Menorah", "It's your childhood menorah, you can see the signs of time through the little dents and scratches. Next to it is an assortment of candles neatly prepared.");
-        Item candles = new Item("Candles", "The candles you need to light the menorah. There are some differently coloured ones, but you can't remember in which order you like to place them.", true);
-        Item boots = new Item("Boots", "Your favourite pair of boots. These will help you stay warm outside if used.", true);
-        Item gelt = new Item("Gelt", "These are Hanukkah Gelt, delicious golden chocolate coins that remind you of your childhood.", true);
-        Item gift = new Item("Gift", "It's a gift for grandma. I should probably go give it to her.", true);
-        Item potatoes = new Item("Potatoes", "It's a sack of potatoes, you need these to make your latkes for your mum.", true);
-        Item oil = new Item("Oil", "It's a bottle of oil, you need these to make sure latkes.", true);
-        Item flour = new Item("Flour", "A packet of flour. You don't need these, so you'll be honest and won't take them.");
-        Item sweets = new Item("Sweets", "It's some tasty-looking sour sweets. Your mum won't be happy if you come home with these...");
-        Item oldBox = new Item("Box", "You look into the old box, inside it you can see the decorations that haven't been put up yet along with some keepsakes.");
-        Item decorations = new Item("Decorations", "It's the decorations you need to put up outside your house. Your mother would be really appreciative if you did this.", true);
-        Item keepsakes = new Item("Keepsakes", "It's some old keepsakes that your mother has kept for a few years. They look delicate.");
-        Item photo = new Item("Photo", "It's an old family photo your grandma loves. On it you can see your family; your uncle Richard, your aunt Barbra, your Grandma, and your dad Patrick.");
+        // The Item class is used for features in rooms as well as items that can be picked up
+        Item todoList = new Item("Todo list", "You read the to-do list: go shopping, fry latkes, prepare the menorah, and put up decorations. \nYou should probably help your mum with some of these.");
+        Item pan = new Item("Pan", "The frying pan is on the counter, ready to make latkes.");
+        Item menorah = new Item("Menorah", "It’s your childhood menorah, showing signs of time with little dents and scratches. Next to it is a neat assortment of candles.");
+        Item candles = new Item("Candles", "The candles to light the menorah. There are some differently coloured ones, but you can't remember the order you prefer to place them.", true);
+        Item boots = new Item("Boots", "Your favourite pair of boots, perfect for staying warm outside.", true);
+        Item gelt = new Item("Gelt", "Golden chocolate coins, a Hanukkah favourite, reminding you of your childhood.", true);
+        Item gift = new Item("Gift", "A gift for Grandma. You should probably bring it to her.", true);
+        Item potatoes = new Item("Potatoes", "A sack of potatoes, essential for making latkes for your mum.", true);
+        Item oil = new Item("Oil", "A bottle of oil, just what you need for frying latkes.", true);
+        Item flour = new Item("Flour", "A packet of flour. You don’t need it, so you’ll be honest and leave it behind.");
+        Item sweets = new Item("Sweets", "Tasty-looking sweets. Mum might not be thrilled if you bring these home...");
+        Item oldBox = new Item("Box", "An old box filled with decorations and keepsakes.");
+        Item decorations = new Item("Decorations", "Decorations for outside. Your mum would be really pleased if you put these up.", true);
+        Item keepsakes = new Item("Keepsakes", "Delicate keepsakes your mum has saved over the years.");
+        Item photo = new Item("Photo", "An old family photo Grandma cherishes. It shows your family: Uncle Richard, Aunt Barbara, Grandma, and your dad Patrick.");
 
         //Adding the items to their respective rooms, this is to ensure that the player is in the right room when interacting with a feature/item
         kitchen.setItems(new Item[]{todoList, pan});
