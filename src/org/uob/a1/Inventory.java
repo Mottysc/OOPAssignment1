@@ -10,6 +10,8 @@ public class Inventory {
         descriptions = new String[MAX_ITEMS];
     }
 
+    //Finds the first null space in the inventory and places it there.
+    //No check needs to be made for a full inventory as there are 7 items that can be picked up, and 10 inventory slots
     public void addItem(String item) {
         for (int i = 0; i < MAX_ITEMS; i++) {
             if (items[i] == null) {
@@ -41,7 +43,7 @@ public class Inventory {
                 found = true;
             }
         }
-        if (found) { //To prevent duplication, mark the last item as null
+        if (found) { //To prevent duplication, mark the last item as null (if the last slot had an item, it would now be there twice)
             items[items.length - 1] = null;
         } else {
             System.out.println(item + " not found to remove");
@@ -50,14 +52,13 @@ public class Inventory {
 
     //Display the inventory
     public String displayInventory() {
-        String returnString = "";
-
+        StringBuilder returnString = new StringBuilder();
         for (int i = 0; i < items.length; i++) {
             if (items[i] != null) {
-                returnString += items[i] + " ";
+                returnString.append(items[i]).append(" ");
             }
         }
-        return returnString;
+        return returnString.toString();
     }
 
     //Used if the player types the inventory command with an empty inventory

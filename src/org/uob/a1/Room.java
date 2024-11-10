@@ -14,28 +14,24 @@ public class Room {
         this.position = position;
     }
 
-    //Getters
-    public Item[] getItems() {
-        return items;
-    }
-
     //Setters
     public void setItems(Item[] items) {
         this.items = items;
     }
 
+    //Getters
+    public Item[] getItems() {
+        return items;
+    }
     public String getName() {
         return name;
     }
-
     public String getDescription() {
         return description;
     }
-
     public char getSymbol() {
         return symbol;
     }
-
     public Position getPosition() {
         return position;
     }

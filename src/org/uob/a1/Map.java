@@ -21,6 +21,7 @@ public class Map {
         map[pos.y][pos.x] = symbol;
     }
 
+    //Create the map grid
     public String display() {
         StringBuilder sb = new StringBuilder();
         for (int y = 0; y < height; y++) {

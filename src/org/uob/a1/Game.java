@@ -49,7 +49,7 @@ public class Game {
 
         rooms = new Room[]{kitchen, livingRoom, diningRoom, attic, westRoad, eastRoad, northRoad, grandmaHouse, neighbour, hallway, shop, northMidRoad, splitRoad, eastMidRoad};
 
-        // The Item class is used for features in rooms as well as items that can be picked up
+        //The Item class is used for features in rooms as well as items that can be picked up
         Item todoList = new Item("Todo list", "You read the ToDo list, it says to go shopping, fry latkes, prepare the menorah, and put up decorations. \nYou should probably help your mum with some of these.");
         Item pan = new Item("Frying Pan", "The frying pan is on the counter, ready to make latkes.");
         Item menorah = new Item("Menorah", "It's your childhood menorah, showing signs of time with little dents and scratches. Next to it is a neat assortment of candles.");
@@ -78,13 +78,13 @@ public class Game {
         //Creating the people and their line of dialogue
         Person mother = new Person("Your mother", diningRoom, "Please make sure you finish all the items on your ToDo list that I left on the fridge. Also, go give your grandma a visit, she would appreciate your presence.");
         Person grandma = new Person("Grandma", grandmaHouse, "Hey! I'm so glad to decided to come visit me! ");
-        Person neighbourKid = new Person("Kid", neighbour, "Hey neighbour! I don't have any Hanukkah Gelt this year, do you have any? I would really appreciate it!");
-        Person shopkeeper = new Person("Shopkeeper", shop, "Hey, welcome to the shop. As it's the season of giving, everything will be free tonight, take whatever you need. Happy holidays!");
+        Person neighbourKid = new Person("Kid", neighbour, "Hey neighbour! I don't have any Hanukkah Gelt this year... do you have any spare? I would really appreciate it!");
+        Person shopkeeper = new Person("Shopkeeper", shop, "Hey, welcome to the shop! Since it's the season of giving, everything will be free tonight, take whatever you need. Happy holidays!");
         people = new Person[]{mother, grandma, neighbourKid, shopkeeper};
 
         //Starting the game
         currentRoom = kitchen;
-        System.out.println("You wake up from an afternoon nap after school, you feel groggy from the sleep but are excited for the festivities tonight.");
+        System.out.println("You wake up from a cosy afternoon nap, you feel groggy from the sleep but are excited for the festivities tonight.");
         System.out.print("You enter " + currentRoom.getName() + ". ");
         System.out.println(currentRoom.getDescription());
 
@@ -417,8 +417,8 @@ public class Game {
                 Red, Orange, Yellow, Green, Blue, Purple, White, Lime, Turquoise, and Cyan.
                 To figure out the right order, use the first initial of each colour and guess the correct order.
                 For example, to enter two green and two red candles, type "ggrr".
-                You will then receive an answer based on your guess.
-                The candles can either be the right colour in the wrong place, the right colour and the right place, or the wrong colour.
+                You will then receive an feedback based on your guess.
+                The candles can either be the right colour but in the wrong place, the right colour and in the right place, or the wrong colour.
                 Type "give up" to stop playing.
                 For a hint, type "hint\"""");
 

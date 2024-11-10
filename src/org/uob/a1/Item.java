@@ -10,7 +10,7 @@ public class Item {
         this.itemDescription = itemDescription;
 
     }
-
+    //A second constructor. If an item can be picked up, canPickUp gets changed.
     public Item(String itemName, String itemDescription, boolean canPickUp) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
