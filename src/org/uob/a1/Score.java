@@ -4,8 +4,8 @@ public class Score {
     private final int PUZZLE_VALUE = 10;
     private double currentScore;
     private int startingScore;
-    private int noRoomsVisited;
-    private int noPuzzlesSolves;
+    private int noRoomsVisited = 0;
+    private int noPuzzlesSolves = 0;
 
     //Constructor, sets the starting score
     public Score(int startingScore) {
