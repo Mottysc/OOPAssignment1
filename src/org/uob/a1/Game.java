@@ -207,6 +207,7 @@ public class Game {
                                 if (inv.hasItem("gift") != -1) {
                                     //There is an optional puzzle I added, if you bring the gift to your grandma, she thanks you and you gain points.
                                     System.out.println("Thank you so much for bringing me a gift, I really do appreciate it!\n+10 Points!");
+                                    inv.removeItem("gift");
                                     score.solvePuzzle();
                                 } else {
                                     System.out.println(" ");
