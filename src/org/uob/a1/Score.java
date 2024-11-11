@@ -4,8 +4,8 @@ public class Score {
     private final int PUZZLE_VALUE = 10;
     private double currentScore;
     private int startingScore;
-    private int noRoomsVisited = 0;
-    private int noPuzzlesSolves = 0;
+    private int noRoomsVisited;
+    private int noPuzzlesSolves;
 
     //Constructor, sets the starting score
     public Score(int startingScore) {
@@ -22,7 +22,7 @@ public class Score {
 
     //Calculate the score as per the document specification
     public double getScore() {
-        currentScore = startingScore - (noRoomsVisited + (PUZZLE_VALUE * noPuzzlesSolves));
+        currentScore = startingScore - noRoomsVisited + (PUZZLE_VALUE * noPuzzlesSolves);
         return currentScore;
     }
 
