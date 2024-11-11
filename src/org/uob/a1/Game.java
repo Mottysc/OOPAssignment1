@@ -289,7 +289,7 @@ public class Game {
                     switch (feature) {
                         case "boots":
                             if (inv.hasItem("boots") != -1) {
-                                if (player == rooms[9].getPosition()) {
+                                if (currentRoom == rooms[9]) {
                                     System.out.println("You put on your boots and are now ready to venture outside\n+10 Points!");
                                     inv.removeItem("boots");
                                     score.solvePuzzle();
@@ -303,7 +303,7 @@ public class Game {
                             break;
                         case "candles":
                             if (inv.hasItem("candles") != -1) {
-                                if (player == rooms[1].getPosition()) {
+                                if (currentRoom == rooms[1]) {
                                     playMastermind();
                                 } else {
                                     System.out.println("These candles are for your menorah in your living room, you should use them there.");
@@ -315,7 +315,7 @@ public class Game {
 
                         case "gift":
                             if (inv.hasItem("gift") != -1) {
-                                if (player != rooms[7].getPosition()) {
+                                if (currentRoom != rooms[7]) {
                                     System.out.println("You should probably go give your gift to your grandma.");
                                 }
                             } else {
@@ -325,7 +325,7 @@ public class Game {
 
                         case "potatoes", "oil":
                             if (inv.hasItem("potatoes") != -1 && inv.hasItem("oil") != -1) {
-                                if (player == rooms[0].getPosition()) {
+                                if (currentRoom == rooms[0]) {
                                     System.out.println("You peel the potatoes, grate them, add oil to the pan, and turn on the stove.\nYou create the latkes patties and carefully place them into the hot oil. \nThey sizzle as they turn a golden-brown colour before you remove them, ready to eat.\nYou have successfully made the latkes.\n+10 Points!");
                                     inv.removeItem("oil");
                                     inv.removeItem("potatoes");
@@ -344,7 +344,7 @@ public class Game {
 
                         case "gelt":
                             if (inv.hasItem("gelt") != -1) {
-                                if (player == rooms[8].getPosition()) {
+                                if (currentRoom == rooms[8]) {
                                     System.out.println("The neighbour's kid is very grateful for your Hanukkah Gelt. He looks very happy with himself, and it warms your heart.\n+10 Points!");
                                     inv.removeItem("gelt");
                                     score.solvePuzzle();
@@ -356,7 +356,7 @@ public class Game {
 
                         case "decorations":
                             if (inv.hasItem("decorations") != -1) {
-                                if (player == rooms[6].getPosition()) {
+                                if (currentRoom == rooms[6]) {
                                     System.out.println("You work hard and place the decorations along the front of your house. Despite the cold outside, you manage to work up a sweat.\nYou stand back and admire your work, feeling happy with yourself.\n+10 Points!");
                                     inv.removeItem("decorations");
                                     score.solvePuzzle();
